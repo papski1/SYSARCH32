@@ -3,6 +3,7 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
 </head>
 <body>
     <nav class="navbar">
@@ -11,7 +12,8 @@
 
     <div class="container">
         <div class="form-container">
-            <h2>CSS SIT-IN MONITORING SYSTEM</h2>
+            <img style="width:120px;margin-left:110px"  src ="{{ url_for('static', filename='image/images.png') }}">
+            <h2>CCS Sit-in Monitoring System</h2>
             
             {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -33,11 +35,12 @@
                     <label>Password</label>
                     <input type="password" name="password" required>
                 </div>
-                
-                <button type="submit">Log In</button>
+                <div class="form-group">
+                    <button type="submit">Log In</button>
+                </div>
             </form>
             
-            <a href="{{ url_for('register') }}">Create New Account</a>
+            <a href="{{ url_for('register') }}">Register</a>
         </div>
     </div>
 </body>

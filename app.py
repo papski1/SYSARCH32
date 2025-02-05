@@ -21,7 +21,7 @@ init_db()
 @app.route('/')
 def home():
     if 'username' in session:
-        return f'Logged in as {session["username"]}'
+        return f'Logged in successfully!'
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])

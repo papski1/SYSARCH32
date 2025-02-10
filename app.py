@@ -21,7 +21,7 @@ init_db()
 @app.route('/')
 def home():
     if 'username' in session:
-        return f'Logged in successfully!'
+        return redirect(url_for('dashboard'))  # Redirect to dashboard if logged in
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -38,7 +38,7 @@ def login():
         
         if user and check_password_hash(user[2], password):
             session['username'] = username
-            return redirect(url_for('home'))
+            return redirect(url_for('dashboard'))  # Redirect to dashboard after login
         else:
             flash('Invalid username or password')
     return render_template('login.html')
@@ -61,6 +61,14 @@ def register():
         except sqlite3.IntegrityError:
             flash('Username already exists')
     return render_template('register.html')
+
+@app.route('/dashboard')
+def dashboard():
+    if 'username' in session:
+        username = session['username']
+        return render_template('dashboard.html', username=username)  # Render dashboard with username
+    else:
+        return redirect(url_for('login'))  # Redirect to login if not logged in
 
 @app.route('/logout')
 def logout():

@@ -24,11 +24,9 @@ body {
 }
 
 .container {
-    flex: 1;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
+    flex-direction: column;
+    flex: 1;
 }
 
 .form-container {
@@ -84,10 +82,13 @@ button:hover {
 }
 
 .sidebar {
+    background-color: #333;
+    color: #fff;
     width: 250px;
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    position: fixed;
+    height: 100%;
+    overflow-y: auto;
 }
 
 .sidebar img {
@@ -97,31 +98,34 @@ button:hover {
 }
 
 .sidebar h2 {
-    font-size: 1.5rem;
+    text-align: center;
     margin-bottom: 1rem;
 }
 
 .sidebar ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
 .sidebar ul li {
-    margin: 10px 0;
+    margin-bottom: 1rem;
 }
 
 .sidebar ul li a {
-    color: #333;
+    color: #fff;
     text-decoration: none;
+    display: block;
+    padding: 0.5rem 0;
+    transition: background-color 0.3s ease;
 }
 
 .sidebar ul li a:hover {
-    color: #555;
+    background-color: #575757;
 }
 
 .main-content {
+    padding: 2rem;
     flex: 1;
-    padding: 20px;
 }
 
 .header {
@@ -139,11 +143,12 @@ button:hover {
 }
 
 .card {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 6px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 2rem auto;
+    max-width: 600px;
 }
 
 .card h3 {
@@ -241,6 +246,21 @@ a:hover {
     text-align: center;
 }
 
+footer {
+    background-color: #1c1e21;
+    color: #fff;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+header {
+    background-color: #1c1e21;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
 @media (max-width: 480px) {
     .container {
         padding: 1rem;
@@ -248,5 +268,17 @@ a:hover {
     
     .form-container {
         padding: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .main-content {
+        margin-left: 0;
     }
 }

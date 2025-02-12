@@ -17,33 +17,71 @@
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
+        <header>
+            <h1>Dashboard</h1>
+        </header>
         <!-- Sidebar -->
         <div class="sidebar">
-            <img style="width: 100px; margin: 20px auto; display: block;" src="{{ url_for('static', filename='image/images.png') }}" alt="Logo">
+            <img src="{{ url_for('static', filename='image/images.png') }}" alt="Logo">
             <h2>Menu</h2>
             <ul>
-                <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
-                <li><a href="{{ url_for('profile') }}">Profile</a></li>
-                <li><a href="{{ url_for('info') }}">Info</a></li>
-                <li><a href="{{ url_for('announcement') }}">Announcement</a></li>
-                <li><a href="{{ url_for('remaining_session') }}">Remaining Session</a></li>
-                <li><a href="{{ url_for('sit_in_rules') }}">Sit-in Rules</a></li>
-                <li><a href="{{ url_for('lab_rules') }}">Lab Rules & Regulations</a></li>
-                <li><a href="{{ url_for('sit_in_history') }}">Sit-in History</a></li>
-                <li><a href="{{ url_for('reservation') }}">Reservation</a></li>
+                <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="showSection('profile')">Profile</a></li>
+                <li><a href="#" onclick="showSection('info')">Info</a></li>
+                <li><a href="#" onclick="showSection('announcement')">Announcement</a></li>
+                <li><a href="#" onclick="showSection('remaining_session')">Remaining Session</a></li>
+                <li><a href="#" onclick="showSection('sit_in_rules')">Sit-in Rules</a></li>
+                <li><a href="#" onclick="showSection('lab_rules')">Lab Rules & Regulations</a></li>
+                <li><a href="#" onclick="showSection('sit_in_history')">Sit-in History</a></li>
+                <li><a href="#" onclick="showSection('reservation')">Reservation</a></li>
                 <li><a href="{{ url_for('logout') }}" class="logout-link">Logout</a></li>
             </ul>
         </div>
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
-
-            <!-- Content Area -->
-            <div class="content">
-                {% block content %}{% endblock %}
+            <div id="dashboard" class="content-section">
+                <h2>Dashboard</h2>
+                <p>This is the main content area.</p>
+            </div>
+            <div id="profile" class="content-section" style="display:none;">
+                <h2>Profile</h2>
+                <p>This is the profile section.</p>
+            </div>
+            <div id="info" class="content-section" style="display:none;">
+                <h2>Info</h2>
+                <p>This is the info section.</p>
+            </div>
+            <div id="announcement" class="content-section" style="display:none;">
+                <h2>Announcement</h2>
+                <p>This is the announcement section.</p>
+            </div>
+            <div id="remaining_session" class="content-section" style="display:none;">
+                <h2>Remaining Session</h2>
+                <p>This is the remaining session section.</p>
+            </div>
+            <div id="sit_in_rules" class="content-section" style="display:none;">
+                <h2>Sit-in Rules</h2>
+                <p>This is the sit-in rules section.</p>
+            </div>
+            <div id="lab_rules" class="content-section" style="display:none;">
+                <h2>Lab Rules & Regulations</h2>
+                <p>This is the lab rules section.</p>
+            </div>
+            <div id="sit_in_history" class="content-section" style="display:none;">
+                <h2>Sit-in History</h2>
+                <p>This is the sit-in history section.</p>
+            </div>
+            <div id="reservation" class="content-section" style="display:none;">
+                <h2>Reservation</h2>
+                <p>This is the reservation section.</p>
             </div>
         </div>
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2023 Dashboard. All rights reserved.</p>
+        </footer>
     </div>
 </body>
 </html>

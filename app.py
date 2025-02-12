@@ -31,9 +31,9 @@ def dashboard():
 
 @app.route('/profile')
 def profile():
-    if 'username' in session:
-        return render_template('sections/profile.html', username=session['username'])
-    return redirect(url_for('login'))
+    # Assuming user data is stored in session after login
+    user_data = session.get('user_data')
+    return render_template('sections/profile.html', user_data=user_data)
 
 @app.route('/info')
 def info():
@@ -94,7 +94,7 @@ def reservation():
     conn = sqlite3.connect('database.db')
     c = conn.cursor()
     c.execute('SELECT date, time FROM reservations WHERE username = ?', (username,))
-    reservations = c.fetchall()
+    reservations = c.fetchall() 
     conn.close()
     
     return render_template('sections/reservation.html', username=username, reservations=reservations)

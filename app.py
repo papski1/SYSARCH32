@@ -13,15 +13,95 @@ def init_db():
                  (id INTEGER PRIMARY KEY AUTOINCREMENT,
                   username TEXT UNIQUE NOT NULL,
                   password TEXT NOT NULL)''')
+    c.execute('''CREATE TABLE IF NOT EXISTS reservations
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  username TEXT NOT NULL,
+                  date TEXT NOT NULL,
+                  time TEXT NOT NULL)''')
     conn.commit()
     conn.close()
 
 init_db()
 
 @app.route('/')
-def home():
+def dashboard():
     if 'username' in session:
-        return redirect(url_for('dashboard'))  # Redirect to dashboard if logged in
+        return render_template('sections/dashboard.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/profile')
+def profile():
+    if 'username' in session:
+        return render_template('sections/profile.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/info')
+def info():
+    if 'username' in session:
+        return render_template('sections/info.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/announcement')
+def announcement():
+    if 'username' in session:
+        return render_template('sections/announcement.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/remaining_session')
+def remaining_session():
+    if 'username' in session:
+        return render_template('sections/remaining_session.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/sit_in_rules')
+def sit_in_rules():
+    if 'username' in session:
+        return render_template('sections/sit_in_rules.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/lab_rules')
+def lab_rules():
+    if 'username' in session:
+        return render_template('sections/lab_rules.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/sit_in_history')
+def sit_in_history():
+    if 'username' in session:
+        return render_template('sections/sit_in_history.html', username=session['username'])
+    return redirect(url_for('login'))
+
+@app.route('/reservation', methods=['GET', 'POST'])
+def reservation():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    if request.method == 'POST':
+        date = request.form['date']
+        time = request.form['time']
+        username = session['username']
+        
+        conn = sqlite3.connect('database.db')
+        c = conn.cursor()
+        c.execute('INSERT INTO reservations (username, date, time) VALUES (?, ?, ?)', (username, date, time))
+        conn.commit()
+        conn.close()
+        
+        flash('Reservation successful!')
+        return redirect(url_for('reservation'))
+    
+    username = session['username']
+    conn = sqlite3.connect('database.db')
+    c = conn.cursor()
+    c.execute('SELECT date, time FROM reservations WHERE username = ?', (username,))
+    reservations = c.fetchall()
+    conn.close()
+    
+    return render_template('sections/reservation.html', username=username, reservations=reservations)
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
     return redirect(url_for('login'))
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -38,7 +118,7 @@ def login():
         
         if user and check_password_hash(user[2], password):
             session['username'] = username
-            return redirect(url_for('dashboard'))  # Redirect to dashboard after login
+            return redirect(url_for('dashboard'))
         else:
             flash('Invalid username or password')
     return render_template('login.html')
@@ -61,19 +141,6 @@ def register():
         except sqlite3.IntegrityError:
             flash('Username already exists')
     return render_template('register.html')
-
-@app.route('/dashboard')
-def dashboard():
-    if 'username' in session:
-        username = session['username']
-        return render_template('dashboard.html', username=username)  # Render dashboard with username
-    else:
-        return redirect(url_for('login'))  # Redirect to login if not logged in
-
-@app.route('/logout')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('login'))
 
 if __name__ == '__main__':
     app.run(debug=True)

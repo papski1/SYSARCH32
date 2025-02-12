@@ -6,12 +6,13 @@
     <title>{% block title %}Dashboard{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script>
-        function showSection(sectionId) {
-            var sections = document.getElementsByClassName('content-section');
-            for (var i = 0; i < sections.length; i++) {
-                sections[i].style.display = 'none';
+        function toggleHistory() {
+            var content = document.getElementById('history-content');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
             }
-            document.getElementById(sectionId).style.display = 'block';
         }
     </script>
 </head>
@@ -37,7 +38,6 @@
 
         <!-- Main Content -->
         <div class="main-content">
-            <!-- Header -->
 
             <!-- Content Area -->
             <div class="content">
